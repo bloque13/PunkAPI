@@ -14,9 +14,7 @@ import com.example.jetpackcompose.data.dto.Beer
 @Composable
 fun BeerView(
     beer: Beer,
-    favourite: Boolean = false,
     onItemClick: (Beer) -> Unit,
-    onFavouriteClick: (Int) -> Unit = {},
 ) {
         Card(
             modifier = Modifier
@@ -50,58 +48,7 @@ fun BeerView(
                         style = MaterialTheme.typography.caption
                     )
                 }
-
-//                Spacer(modifier = Modifier.weight(1.0f)) // fill height with spacer
-//
-//                        Icon(
-//                            Icons.Filled.Favorite,
-//                            "favourited",
-//                            tint = if (beer.favourite) Color.Red else Color.Gray,
-//                            modifier =  Modifier.weight(1.0f)
-//                        )
-
-
             }
-
-
-//        Column {
-//            Text(
-//                text = "${beer.name}.",
-//                style = MaterialTheme.typography.body1,
-//                overflow = TextOverflow.Ellipsis
-//            )
-//            Text(
-//                text = "First Brewed: ${beer.first_brewed}",
-//                textAlign = TextAlign.End,
-//                style = MaterialTheme.typography.body2
-//            )
-//
-//            Text(
-//                text = if (beer.favourite) "Favorite" else "Not Fav",
-//                textAlign = TextAlign.End,
-//                style = MaterialTheme.typography.body2
-//            )
-//
-//            Row {
-//                Text(
-//                    text = "Favorite: ",
-//                    style = MaterialTheme.typography.body2
-//                )
-//
-//                IconButton(onClick = {
-//                    onFavouriteClick(beer.id)
-//                }) {
-//                    Icon(
-//                        Icons.Filled.Favorite,
-//                        "favourited",
-//                        tint = if (beer.favourite) Color.Red else Color.Gray
-//                    )
-//                }
-//
-//            }
-//
-//        }
-
         }
 }
 

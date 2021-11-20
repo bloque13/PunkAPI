@@ -20,25 +20,25 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.HttpURLConnection
 
-class GetBeersUseCaseTest {
+class GetBeerUseCaseTest {
 
     private lateinit var mockWebServer: MockWebServer
     private lateinit var baseUrl: HttpUrl
-    private lateinit var getBeersUseCase: GetBeersUseCase
+    private lateinit var getBeerUseCase: GetBeerUseCase
     private lateinit var api: PunkAPI
 
     @BeforeEach
     fun setup() {
         mockWebServer = MockWebServer()
         mockWebServer.start()
-        baseUrl = mockWebServer.url("/v2/beers/")
+        baseUrl = mockWebServer.url("/v2/beers/1/")
         api = Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .build()
             .create(PunkAPI::class.java)
 
-        getBeersUseCase = GetBeersUseCase(api = api)
+        getBeerUseCase = GetBeerUseCase(api = api)
     }
 
     @Test
@@ -51,19 +51,18 @@ class GetBeersUseCaseTest {
         )
 
         // run use case
-        val beersAsFlow = getBeersUseCase.execute().toList()
+        val beersAsFlow = getBeerUseCase.execute(beerId = 1).toList()
 
         // first emission should be `loading`
         assert(beersAsFlow[0].loading)
 
         // second emission should be the beers
-        val beers: List<Beer> = beersAsFlow[1].data as List<Beer>
+        val beer: Beer = beersAsFlow[1].data as Beer
 
         // check size, values etc
-        assert(beers.size == 3)
-        MatcherAssert.assertThat(beers[0], IsInstanceOf.instanceOf(Beer::class.java))
 
-        val beer = beers[0]
+        MatcherAssert.assertThat(beer, IsInstanceOf.instanceOf(Beer::class.java))
+
         assertThat(beer.name).isEqualTo("Buzz")
         assertThat(beer.tagline).isEqualTo("A Real Bitter Experience.")
         assertThat(beer.first_brewed).isEqualTo("09/2007")
@@ -84,7 +83,7 @@ class GetBeersUseCaseTest {
         )
 
         // run use case
-        val beersAsFlow = getBeersUseCase.execute().toList()
+        val beersAsFlow = getBeerUseCase.execute(beerId = 1).toList()
 
         // first emission should be `loading`
         assert(beersAsFlow[0].loading)

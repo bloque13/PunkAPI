@@ -14,13 +14,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import com.example.jetpackcompose.data.dto.Beer
 import com.example.jetpackcompose.presentation.navigation.Screen
 import com.example.jetpackcompose.presentation.ui.beers.components.BeerView
-import com.example.jetpackcompose.presentation.ui.beers.state.BeersEvents
 import com.example.jetpackcompose.presentation.ui.beers.viewmodels.BeersViewModel
-import com.google.gson.Gson
 
 @Composable
 fun BeersScreen(
@@ -29,8 +25,6 @@ fun BeersScreen(
 ) {
     val state = viewModel.state.value
 
-    viewModel.onEvent(BeersEvents.Load)
-
     Box(modifier = Modifier.fillMaxSize()) {
 
         LazyColumn(modifier = Modifier.fillMaxSize()) {
@@ -38,16 +32,15 @@ fun BeersScreen(
                 BeerView(
                     beer = beer,
                     onItemClick = {
-                        onNavigateToScreen("${Screen.BeerDetailScreen.route}/${Gson().toJson(it)}")
-                    },
-                    onFavouriteClick = {
-                      viewModel.onEvent(BeersEvents.FavouriteBeer(it.toString()))
+                        onNavigateToScreen(
+                            "${Screen.BeerDetailScreen.route}/${it.id}"
+                        )
                     }
                 )
             }
         }
 
-        if(state.error.isNotBlank()) {
+        if (state.error.isNotBlank()) {
             Text(
                 text = state.error,
                 color = MaterialTheme.colors.error,
@@ -59,7 +52,7 @@ fun BeersScreen(
             )
         }
 
-        if(state.isLoading) {
+        if (state.isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
 

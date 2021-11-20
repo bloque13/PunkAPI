@@ -7,6 +7,5 @@ data class BeersState(
     val page: Int = 1,
     val query: String = "",
     val error: String = "",
-    val beers: List<Beer> = listOf(),
-    val selected: Boolean = false
-    )
+    val beers: List<Beer> = listOf()
+)

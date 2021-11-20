@@ -2,6 +2,7 @@ package com.example.jetpackcompose.common
 
 object Constants {
 
+    const val PARAM_BEER_ID = "beerId"
     const val BASE_URL = "https://api.punkapi.com/v2/"
     const val SHARED_PREF_NAME = "shared_pref"
     const val SAVED_FAVOURITES = "saved_favourites"

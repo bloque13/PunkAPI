@@ -52,18 +52,13 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     composable(
-                        route = "${Screen.BeerDetailScreen.route}/{beer}",
+                        route = "${Screen.BeerDetailScreen.route}/{beerId}",
                         arguments = listOf(
-                            navArgument("beer") { type = NavType.StringType }
+                            navArgument("beerId") { type = NavType.IntType }
                         )
                     ) {
-                        val viewModel = hiltNavGraphViewModel<BeerDetailViewModel>(it)
-                        viewModel.setBeer123(Gson().fromJson(
-                            it.arguments?.getString("beer"),
-                            Beer::class.java
-                        ))
                         BeersDetailScreen(
-                            viewModel = viewModel,
+                            viewModel =  hiltNavGraphViewModel<BeerDetailViewModel>(it),
                         )
                     }
 
