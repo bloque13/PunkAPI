@@ -66,21 +66,7 @@ fun BeersDetailScreen(
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                Text(
-                    text = "MALT",
-                    style = MaterialTheme.typography.h6
-                )
-
-                Spacer(modifier = Modifier.height(10.dp))
-
                 IngredientView(beer.ingredients.malt, "Malt")
-
-                Text(
-                    text = "HOPS",
-                    style = MaterialTheme.typography.h6
-                )
-
-                Spacer(modifier = Modifier.height(10.dp))
 
                 IngredientView(beer.ingredients.hops, "Hops")
 
@@ -105,7 +91,15 @@ fun BeersDetailScreen(
 }
 
 @Composable
-private fun IngredientView(ingredients: List<Ingredient>, s: String) {
+private fun IngredientView(ingredients: List<Ingredient>, title: String) {
+
+    Text(
+        text = title,
+        style = MaterialTheme.typography.h6
+    )
+
+    Spacer(modifier = Modifier.height(10.dp))
+
     ingredients.forEach { ingredient ->
         Row(
             modifier = Modifier.padding(5.dp)

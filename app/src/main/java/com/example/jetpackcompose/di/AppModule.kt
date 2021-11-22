@@ -7,6 +7,10 @@ import com.example.jetpackcompose.common.Constants
 import com.example.jetpackcompose.data.remote.PunkAPI
 import com.example.jetpackcompose.data.repository.PunkRepositoryImpl
 import com.example.jetpackcompose.domain.repository.PunkRepository
+import com.example.jetpackcompose.domain.repository.SharedPreferencesRepository
+import com.example.jetpackcompose.domain.repository.SharedPreferencesRepositoryImpl
+import com.example.jetpackcompose.interactors.prefs.SharedPreferencesUseCase
+import com.example.jetpackcompose.interactors.prefs.SharedPreferencesUseCaseImpl
 import com.example.jetpackcompose.presentation.BaseApplication
 import dagger.Module
 import dagger.Provides
@@ -50,6 +54,26 @@ object AppModule {
     @Singleton
     fun providePunkRepository(api: PunkAPI): PunkRepository {
         return PunkRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSharedPreferencesRepository (
+        sharedPreferences: SharedPreferences
+    ): SharedPreferencesRepository {
+        return SharedPreferencesRepositoryImpl(
+            sharedPreferences = sharedPreferences
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun providerSharedPreferences(
+        repo: SharedPreferencesRepository
+    ) : SharedPreferencesUseCase {
+        return SharedPreferencesUseCaseImpl(
+            sharedPreferencesRepository = repo
+        )
     }
 
 }
